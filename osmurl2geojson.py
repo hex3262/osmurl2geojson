@@ -56,7 +56,8 @@ def main():
     profile = profile.replace("routed-", "")
 
     # Build the official OSRM API request URL
-    api_url = f"http://router.project-osrm.org/route/v1/{profile}/{coord_string}?geometries=geojson&overview=full"
+    api_url = \
+f"http://router.project-osrm.org/route/v1/{profile}/{coord_string}?geometries=geojson&overview=full"
 
     try:
         print(f"Fetching data from OSRM API ({profile})...")
