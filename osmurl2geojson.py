@@ -97,14 +97,13 @@ f"http://router.project-osrm.org/route/v1/{profile}/{coord_string}?geometries=ge
             umap_geojson["features"].append(wp_feature)
 
         # Export to file
-        output_filename = "umap_route.geojson"
-        with open(output_filename, "w", encoding="utf-8") as f:
+        with open("umap_route.geojson", "w", encoding="utf-8") as f:
             json.dump(umap_geojson, f, ensure_ascii=False, indent=2)
 
         print( \
-f"Exported one route track and {len(data['waypoints'])} waypoints to '{output_filename}'.")
+f"Exported one route track and {len(data['waypoints'])} waypoints to 'umap_route.geojson'.")
 
-    except Exception as e:
+    except (FileNotFoundError,PermissionError) as e:
         print(f"Error fetching or saving data: {e}", file=sys.stderr)
         sys.exit(1)
 
