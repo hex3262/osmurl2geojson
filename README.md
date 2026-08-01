@@ -23,7 +23,7 @@ This tool fetches the official OSRM API data, restructures it into a standard `F
 Run the script from your terminal by passing the copied URL as an argument:
 
 ```bash
-python3 osmurl2geojson "YOUR_COPIED_OSM_ROUTING_URL"
+python3 osmurl2geojson.py "YOUR_COPIED_OSM_ROUTING_URL"
 ```
 
 *Note: Always wrap the URL in double quotes `""` to prevent terminal errors with special characters like `&`.*
