@@ -23,7 +23,7 @@ This tool fetches the official OSRM API data, restructures it into a standard `F
 Run the script from your terminal by passing the copied URL as an argument:
 
 ```bash
-python3 osrm_to_umap.py "YOUR_COPIED_OSM_ROUTING_URL"
+python3 osmurl2geojson "YOUR_COPIED_OSM_ROUTING_URL"
 ```
 
 *Note: Always wrap the URL in double quotes `""` to prevent terminal errors with special characters like `&`.*
@@ -32,10 +32,13 @@ A new file named `umap_route.geojson` will be generated in your current director
 
 ### 3. Import into uMap
 1. Open [uMap](https://openstreetmap.de) and click **Create a map** (or open an existing map in **Edit mode**).
-2. Click the **Import data** icon (arrow pointing up) on the right sidebar.
+2. Click the **Import data** icon (arrow pointing up) on the right sidebar (probably the second from above in the second group of icons).
 3. Click **Browse** and select the generated `umap_route.geojson` file.
-4. Set the format dropdown to **geojson**.
-5. Click **Import** and save your map.
+4. Set the format dropdown to **geojson** (may be recognized automatically).
+5. Click **Import**.
+6. Enjoy seeing your route in the overlay on top of the map.
+7. You may modifiy the color and other attributes of the waypoints.
+8. Save your map, if you want to keep it.
 
 ---
 
@@ -46,4 +49,3 @@ A new file named `umap_route.geojson` will be generated in your current director
 
 ## License
 This project is available under the [MIT License](LICENSE).
-
