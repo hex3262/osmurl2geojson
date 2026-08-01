@@ -40,7 +40,7 @@ def extract_coordinates(osm_url):
 
         return ";".join(swapped_locs), profile
 
-    except Exception as e:
+    except ValueError as e:
         print(f"Error parsing URL: {e}", file=sys.stderr)
         sys.exit(1)
 
@@ -51,8 +51,7 @@ def main():
         print(f"Usage: {sys.argv[0]} <openstreetmap_routing_url>")
         sys.exit(1)
 
-    osm_url = sys.argv[1]
-    coord_string, profile = extract_coordinates(osm_url)
+    coord_string, profile = extract_coordinates(sys.argv[1])
     profile = profile.replace("routed-", "")
 
     # Build the official OSRM API request URL
@@ -102,7 +101,8 @@ f"http://router.project-osrm.org/route/v1/{profile}/{coord_string}?geometries=ge
         with open(output_filename, "w", encoding="utf-8") as f:
             json.dump(umap_geojson, f, ensure_ascii=False, indent=2)
 
-        print(f"Exported one route track and {len(data['waypoints'])} waypoints to '{output_filename}'.")
+        print( \
+f"Exported one route track and {len(data['waypoints'])} waypoints to '{output_filename}'.")
 
     except Exception as e:
         print(f"Error fetching or saving data: {e}", file=sys.stderr)
