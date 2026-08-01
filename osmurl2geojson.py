@@ -46,6 +46,7 @@ def extract_coordinates(osm_url):
 
 
 def main():
+    """Main program expects exactly one argument."""
     if len(sys.argv) < 2:
         print(f"Usage: {sys.argv[0]} <openstreetmap_routing_url>")
         sys.exit(1)
