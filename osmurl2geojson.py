@@ -47,8 +47,8 @@ def extract_coordinates(osm_url):
 
 def main():
     """Main program expects exactly one argument."""
-    if len(sys.argv) < 2:
-        print(f"Usage: {sys.argv[0]} <openstreetmap_routing_url>")
+    if len(sys.argv) < 2 or len(sys.argv) >= 3 and sys.argv[2] != "notrack":
+        print(f"Usage: {sys.argv[0]} <openstreetmap_routing_url> [notrack]")
         sys.exit(1)
 
     coord_string, profile = extract_coordinates(sys.argv[1])
@@ -57,7 +57,6 @@ def main():
     # Build the official OSRM API request URL
     api_url = \
 f"http://router.project-osrm.org/route/v1/{profile}/{coord_string}?geometries=geojson&overview=full"
-
     try:
         print(f"Fetching data from OSRM API ({profile})...")
         req = urllib.request.Request(
@@ -72,13 +71,14 @@ f"http://router.project-osrm.org/route/v1/{profile}/{coord_string}?geometries=ge
         # Structure the final GeoJSON FeatureCollection
         umap_geojson = {"type": "FeatureCollection", "features": []}
 
-        # Append the continuous route line
-        route_feature = {
-            "type": "Feature",
-            "properties": {"name": "Route Track"},
-            "geometry": data["routes"][0]["geometry"],
-        }
-        umap_geojson["features"].append(route_feature)
+        if len(sys.argv) == 2:
+            # Append the continuous route line
+            route_feature = {
+                "type": "Feature",
+                "properties": {"name": "Route Track"},
+                "geometry": data["routes"][0]["geometry"],
+            }
+            umap_geojson["features"].append(route_feature)
 
         # Append the specific waypoints as marker pins
         for index, wp in enumerate(data["waypoints"]):
@@ -100,8 +100,12 @@ f"http://router.project-osrm.org/route/v1/{profile}/{coord_string}?geometries=ge
         with open("umap_route.geojson", "w", encoding="utf-8") as f:
             json.dump(umap_geojson, f, ensure_ascii=False, indent=2)
 
-        print( \
+        if len(sys.argv) == 2:
+            print( \
 f"Exported one route track and {len(data['waypoints'])} waypoints to 'umap_route.geojson'.")
+        else:
+            print( \
+f"Exported {len(data['waypoints'])} waypoints to 'umap_route.geojson'.")
 
     except (FileNotFoundError,PermissionError) as e:
         print(f"Error fetching or saving data: {e}", file=sys.stderr)
