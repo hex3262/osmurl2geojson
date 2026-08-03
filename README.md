@@ -62,5 +62,8 @@ A new file named `umap_route.geojson` will be generated in your current director
 11. Click **Import**, and the waypoints will be drawn.
 12. Enjoy seeing your **original** route with your waypoints in the overlay on top of the map.
 
+## Still more limitation
+- If a waypoint cannot be reached at all by router.project-osrm.org, the workaround described above may not work. As a last resort, you can manually edit the coordinates in the generated 'umap_route.geojson' file before importing the data into umap.
+
 ## License
 This project is available under the [MIT License](LICENSE).
